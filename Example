@@ -1,0 +1,61 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class EmailHistoryResponseTest {
+
+    @Test
+    void testGetSetEmailRecord() {
+        EmailHistoryResponse response = new EmailHistoryResponse();
+        assertNull(response.getEmailRecord());
+
+        // Create a sample email record
+        List<CLTInformation> emailRecord = new ArrayList<>();
+        CLTInformation cltInfo1 = new CLTInformation(/* provide necessary arguments */);
+        CLTInformation cltInfo2 = new CLTInformation(/* provide necessary arguments */);
+        emailRecord.add(cltInfo1);
+        emailRecord.add(cltInfo2);
+
+        // Set email record and test
+        response.setEmailRecord(emailRecord);
+        assertEquals(emailRecord, response.getEmailRecord());
+    }
+
+    @Test
+    void testGetSetErrorCode() {
+        EmailHistoryResponse response = new EmailHistoryResponse();
+        assertNull(response.getErrorCode());
+
+        // Set error code and test
+        String errorCode = "500";
+        response.setErrorCode(errorCode);
+        assertEquals(errorCode, response.getErrorCode());
+    }
+
+    @Test
+    void testGetSetErrorMessage() {
+        EmailHistoryResponse response = new EmailHistoryResponse();
+        assertNull(response.getErrorMessage());
+
+        // Set error message and test
+        String errorMessage = "Internal Server Error";
+        response.setErrorMessage(errorMessage);
+        assertEquals(errorMessage, response.getErrorMessage());
+    }
+
+    @Test
+    void testGetSetLiftScienceResults() {
+        EmailHistoryResponse response = new EmailHistoryResponse();
+        assertNull(response.getLiftScienceResults());
+
+        // Create a sample list of results
+        List<Result> liftScienceResults = new ArrayList<>();
+        Result result1 = new Result(/* provide necessary arguments */);
+        Result result2 = new Result(/* provide necessary arguments */);
+        liftScienceResults.add(result1);
+        liftScienceResults.add(result2);
+
+        // Set lift science results and test
+        response.setLiftScienceResults(liftScienceResults);
+        assertEquals(liftScienceResults, response.getLiftScienceResults());
+    }
+}
