@@ -1,28 +1,37 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class EmailHistoryResponseTest {
+class SearchDocumentsResponseTest {
 
     @Test
-    void testGetSetEmailRecord() {
-        EmailHistoryResponse response = new EmailHistoryResponse();
-        assertNull(response.getEmailRecord());
+    void testGetSetSearchCriteria() {
+        SearchDocumentsResponse response = new SearchDocumentsResponse();
+        assertNull(response.getSearchCriteria());
 
-        // Create a sample email record
-        List<CLTInformation> emailRecord = new ArrayList<>();
-        CLTInformation cltInfo1 = new CLTInformation(/* provide necessary arguments */);
-        CLTInformation cltInfo2 = new CLTInformation(/* provide necessary arguments */);
-        emailRecord.add(cltInfo1);
-        emailRecord.add(cltInfo2);
+        // Create a sample search criteria
+        SearchCriteria searchCriteria = new SearchCriteria(/* provide necessary arguments */);
 
-        // Set email record and test
-        response.setEmailRecord(emailRecord);
-        assertEquals(emailRecord, response.getEmailRecord());
+        // Set search criteria and test
+        response.setSearchCriteria(searchCriteria);
+        assertEquals(searchCriteria, response.getSearchCriteria());
+    }
+
+    @Test
+    void testGetSetSearchResults() {
+        SearchDocumentsResponse response = new SearchDocumentsResponse();
+        assertNull(response.getSearchResults());
+
+        // Create a sample search results
+        SearchResults searchResults = new SearchResults(/* provide necessary arguments */);
+
+        // Set search results and test
+        response.setSearchResults(searchResults);
+        assertEquals(searchResults, response.getSearchResults());
     }
 
     @Test
     void testGetSetErrorCode() {
-        EmailHistoryResponse response = new EmailHistoryResponse();
+        SearchDocumentsResponse response = new SearchDocumentsResponse();
         assertNull(response.getErrorCode());
 
         // Set error code and test
@@ -32,30 +41,13 @@ class EmailHistoryResponseTest {
     }
 
     @Test
-    void testGetSetErrorMessage() {
-        EmailHistoryResponse response = new EmailHistoryResponse();
-        assertNull(response.getErrorMessage());
+    void testGetSetErrorMsgTxt() {
+        SearchDocumentsResponse response = new SearchDocumentsResponse();
+        assertNull(response.getErrorMsgTxt());
 
-        // Set error message and test
-        String errorMessage = "Internal Server Error";
-        response.setErrorMessage(errorMessage);
-        assertEquals(errorMessage, response.getErrorMessage());
-    }
-
-    @Test
-    void testGetSetLiftScienceResults() {
-        EmailHistoryResponse response = new EmailHistoryResponse();
-        assertNull(response.getLiftScienceResults());
-
-        // Create a sample list of results
-        List<Result> liftScienceResults = new ArrayList<>();
-        Result result1 = new Result(/* provide necessary arguments */);
-        Result result2 = new Result(/* provide necessary arguments */);
-        liftScienceResults.add(result1);
-        liftScienceResults.add(result2);
-
-        // Set lift science results and test
-        response.setLiftScienceResults(liftScienceResults);
-        assertEquals(liftScienceResults, response.getLiftScienceResults());
+        // Set error message text and test
+        String errorMsgTxt = "Internal Server Error";
+        response.setErrorMsgTxt(errorMsgTxt);
+        assertEquals(errorMsgTxt, response.getErrorMsgTxt());
     }
 }
