@@ -1,57 +1,14 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-class CCESMessageServiceTest {
-
-    @Mock
-    private PropertiesService props;
-
-    @Mock
-    private CCESQueryHelper ccesQueryHelper;
-
-    @InjectMocks
-    private CCESMessageService ccesMessageService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EmailHistoryApplication.class)
+public class EmailHistoryApplicationTest {
 
     @Test
-    void testSearchWithValidData() {
-        // Set up your CCESMessageRequest with valid data
-        CCESMessageRequest validRequest = new CCESMessageRequest(/* provide necessary arguments */);
-
-        // Mock any dependencies that you need
-        when(props.get(/* property key */)).thenReturn(/* mock response */);
-        when(ccesQueryHelper.executeQuery(/* provide necessary arguments */)).thenReturn(/* mock response */);
-
-        // Call the method and test the result
-        MessageListResponse result = ccesMessageService.search(validRequest);
-
-        // Assert the result or specific behavior
-        assertNotNull(result);
-        // Add more assertions based on your actual implementation
-    }
-
-    @Test
-    void testSearchWithInvalidData() {
-        // Set up your CCESMessageRequest with invalid data
-        CCESMessageRequest invalidRequest = new CCESMessageRequest(/* provide necessary arguments */);
-
-        // Mock any dependencies that you need
-        when(props.get(/* property key */)).thenReturn(/* mock response */);
-
-        // Call the method and test the result
-        MessageListResponse result = ccesMessageService.search(invalidRequest);
-
-        // Assert the result or specific behavior for invalid data
-        assertNotNull(result);
-        // Add more assertions based on your actual implementation
+    public void contextLoads() {
+        // This test method is just to verify that the Spring context loads successfully
     }
 }
