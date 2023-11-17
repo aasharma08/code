@@ -1,53 +1,77 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class SearchDocumentsResponseTest {
+class MessageListResponseTest {
 
     @Test
-    void testGetSetSearchCriteria() {
-        SearchDocumentsResponse response = new SearchDocumentsResponse();
-        assertNull(response.getSearchCriteria());
+    void testGetSetCustId() {
+        MessageListResponse response = new MessageListResponse();
+        assertNull(response.getCustId());
 
-        // Create a sample search criteria
-        SearchCriteria searchCriteria = new SearchCriteria(/* provide necessary arguments */);
-
-        // Set search criteria and test
-        response.setSearchCriteria(searchCriteria);
-        assertEquals(searchCriteria, response.getSearchCriteria());
+        // Set customer ID and test
+        String custId = "123";
+        response.setCustId(custId);
+        assertEquals(custId, response.getCustId());
     }
 
     @Test
-    void testGetSetSearchResults() {
-        SearchDocumentsResponse response = new SearchDocumentsResponse();
-        assertNull(response.getSearchResults());
+    void testGetSetECPDId() {
+        MessageListResponse response = new MessageListResponse();
+        assertNull(response.getECPDId());
 
-        // Create a sample search results
-        SearchResults searchResults = new SearchResults(/* provide necessary arguments */);
+        // Set ECPD ID and test
+        String eCPDId = "456";
+        response.setECPDId(eCPDId);
+        assertEquals(eCPDId, response.getECPDId());
+    }
 
-        // Set search results and test
-        response.setSearchResults(searchResults);
-        assertEquals(searchResults, response.getSearchResults());
+    @Test
+    void testGetSetCustType() {
+        MessageListResponse response = new MessageListResponse();
+        assertNull(response.getCustType());
+
+        // Set customer type and test
+        String custType = "Individual";
+        response.setCustType(custType);
+        assertEquals(custType, response.getCustType());
     }
 
     @Test
     void testGetSetErrorCode() {
-        SearchDocumentsResponse response = new SearchDocumentsResponse();
-        assertNull(response.getErrorCode());
+        MessageListResponse response = new MessageListResponse();
+        assertEquals("0000", response.getErrorCode());
 
         // Set error code and test
-        String errorCode = "500";
+        String errorCode = "1001";
         response.setErrorCode(errorCode);
         assertEquals(errorCode, response.getErrorCode());
     }
 
     @Test
     void testGetSetErrorMsgTxt() {
-        SearchDocumentsResponse response = new SearchDocumentsResponse();
-        assertNull(response.getErrorMsgTxt());
+        MessageListResponse response = new MessageListResponse();
+        assertEquals("SUCCESS", response.getErrorMsgTxt());
 
         // Set error message text and test
-        String errorMsgTxt = "Internal Server Error";
+        String errorMsgTxt = "Error occurred";
         response.setErrorMsgTxt(errorMsgTxt);
         assertEquals(errorMsgTxt, response.getErrorMsgTxt());
+    }
+
+    @Test
+    void testGetSetMessage() {
+        MessageListResponse response = new MessageListResponse();
+        assertNull(response.getMessage());
+
+        // Create a sample list of messages
+        List<CCESMessageInformation> messages = new ArrayList<>();
+        CCESMessageInformation message1 = new CCESMessageInformation(/* provide necessary arguments */);
+        CCESMessageInformation message2 = new CCESMessageInformation(/* provide necessary arguments */);
+        messages.add(message1);
+        messages.add(message2);
+
+        // Set messages and test
+        response.setMessage(messages);
+        assertEquals(messages, response.getMessage());
     }
 }
