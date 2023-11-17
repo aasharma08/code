@@ -1,77 +1,57 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-class MessageListResponseTest {
+class CCESMessageServiceTest {
 
-    @Test
-    void testGetSetCustId() {
-        MessageListResponse response = new MessageListResponse();
-        assertNull(response.getCustId());
+    @Mock
+    private PropertiesService props;
 
-        // Set customer ID and test
-        String custId = "123";
-        response.setCustId(custId);
-        assertEquals(custId, response.getCustId());
+    @Mock
+    private CCESQueryHelper ccesQueryHelper;
+
+    @InjectMocks
+    private CCESMessageService ccesMessageService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testGetSetECPDId() {
-        MessageListResponse response = new MessageListResponse();
-        assertNull(response.getECPDId());
+    void testSearchWithValidData() {
+        // Set up your CCESMessageRequest with valid data
+        CCESMessageRequest validRequest = new CCESMessageRequest(/* provide necessary arguments */);
 
-        // Set ECPD ID and test
-        String eCPDId = "456";
-        response.setECPDId(eCPDId);
-        assertEquals(eCPDId, response.getECPDId());
+        // Mock any dependencies that you need
+        when(props.get(/* property key */)).thenReturn(/* mock response */);
+        when(ccesQueryHelper.executeQuery(/* provide necessary arguments */)).thenReturn(/* mock response */);
+
+        // Call the method and test the result
+        MessageListResponse result = ccesMessageService.search(validRequest);
+
+        // Assert the result or specific behavior
+        assertNotNull(result);
+        // Add more assertions based on your actual implementation
     }
 
     @Test
-    void testGetSetCustType() {
-        MessageListResponse response = new MessageListResponse();
-        assertNull(response.getCustType());
+    void testSearchWithInvalidData() {
+        // Set up your CCESMessageRequest with invalid data
+        CCESMessageRequest invalidRequest = new CCESMessageRequest(/* provide necessary arguments */);
 
-        // Set customer type and test
-        String custType = "Individual";
-        response.setCustType(custType);
-        assertEquals(custType, response.getCustType());
-    }
+        // Mock any dependencies that you need
+        when(props.get(/* property key */)).thenReturn(/* mock response */);
 
-    @Test
-    void testGetSetErrorCode() {
-        MessageListResponse response = new MessageListResponse();
-        assertEquals("0000", response.getErrorCode());
+        // Call the method and test the result
+        MessageListResponse result = ccesMessageService.search(invalidRequest);
 
-        // Set error code and test
-        String errorCode = "1001";
-        response.setErrorCode(errorCode);
-        assertEquals(errorCode, response.getErrorCode());
-    }
-
-    @Test
-    void testGetSetErrorMsgTxt() {
-        MessageListResponse response = new MessageListResponse();
-        assertEquals("SUCCESS", response.getErrorMsgTxt());
-
-        // Set error message text and test
-        String errorMsgTxt = "Error occurred";
-        response.setErrorMsgTxt(errorMsgTxt);
-        assertEquals(errorMsgTxt, response.getErrorMsgTxt());
-    }
-
-    @Test
-    void testGetSetMessage() {
-        MessageListResponse response = new MessageListResponse();
-        assertNull(response.getMessage());
-
-        // Create a sample list of messages
-        List<CCESMessageInformation> messages = new ArrayList<>();
-        CCESMessageInformation message1 = new CCESMessageInformation(/* provide necessary arguments */);
-        CCESMessageInformation message2 = new CCESMessageInformation(/* provide necessary arguments */);
-        messages.add(message1);
-        messages.add(message2);
-
-        // Set messages and test
-        response.setMessage(messages);
-        assertEquals(messages, response.getMessage());
+        // Assert the result or specific behavior for invalid data
+        assertNotNull(result);
+        // Add more assertions based on your actual implementation
     }
 }
