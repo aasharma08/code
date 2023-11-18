@@ -1,28 +1,35 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-class SwaggerConfigsTest {
+@SpringBootTest(classes = EmailHistorySqlConfig.class)
+class EmailHistorySqlConfigTest {
+
+    @Autowired
+    private EmailHistorySqlConfig emailHistorySqlConfig;
 
     @Test
-    void testSwaggerDocketBeanCreation() {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SwaggerConfigs.class)) {
-            // Check if the Docket bean is created
-            assertNotNull(context.getBean(Docket.class));
-        }
+    void testGetCcesCustIDAcctNum() {
+        // Assuming the property is defined in your test environment
+        assertNotNull(emailHistorySqlConfig.getCcesCustIDAcctNum());
     }
 
     @Test
-    void testCorsFilterBeanCreation() {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SwaggerConfigs.class)) {
-            // Check if the CorsFilter bean is created
-            assertNotNull(context.getBean(CorsFilter.class));
-        }
+    void testGetCcesECPDID() {
+        assertNotNull(emailHistorySqlConfig.getCcesECPDID());
+    }
+
+    // Add similar tests for other getters
+
+    @Test
+    void testGetCcesEPSCustID() {
+        assertNotNull(emailHistorySqlConfig.getCcesEPSCustID());
     }
 
     @Test
-    void testApiInfoCreation() {
-        SwaggerConfigs swaggerConfigs = new SwaggerConfigs();
-        assertNotNull(swaggerConfigs.metaData());
+    void testGetCcesEPSCustIDECPDID() {
+        assertNotNull(emailHistorySqlConfig.getCcesEPSCustIDECPDID());
     }
+
+    // Add more tests for other getters
 }
