@@ -1,46 +1,77 @@
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.util.Map;
+import javax.sql.DataSource;
+import java.util.concurrent.Executor;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = PropertiesService.class)
-class PropertiesServiceTest {
+@SpringBootTest(classes = AppConfig.class)
+class AppConfigTest {
 
     @Autowired
-    private PropertiesService propertiesService;
+    private DataSource dataSource;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private NamedParameterJdbcTemplate guidbJdbcTemplate;
+
+    @Autowired
+    private DataSource reportingdb;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplateReporting;
+
+    @Autowired
+    private NamedParameterJdbcTemplate reportingGuidbJdbcTemplate;
+
+    @Autowired
+    private Executor asyncExecutor;
 
     @Test
-    void testGetProperties() {
-        String properties = propertiesService.getProperties();
-        assertNotNull(properties);
-        assertTrue(properties.contains("someProperty")); // Replace with an actual property name
+    void testDataSourceBeanCreation() {
+        assertNotNull(dataSource);
+        // Add more assertions based on your specific DataSource properties and behavior
     }
 
     @Test
-    void testGetProperty() {
-        String propName = "someProperty"; // Replace with an actual property name
-        String propertyValue = propertiesService.getProperty(propName);
-        assertNotNull(propertyValue);
-        // Add more assertions based on the expected behavior of getProperty
+    void testJdbcTemplateBeanCreation() {
+        assertNotNull(jdbcTemplate);
+        // Add more assertions based on your specific JdbcTemplate properties and behavior
     }
 
     @Test
-    void testGetPropertyWithDefault() {
-        String propName = "someProperty"; // Replace with an actual property name
-        String defaultValue = "default";
-        String propertyValue = propertiesService.getProperty(propName, defaultValue);
-        assertNotNull(propertyValue);
-        // Add more assertions based on the expected behavior of getProperty with default
+    void testGuidbJdbcTemplateBeanCreation() {
+        assertNotNull(guidbJdbcTemplate);
+        // Add more assertions based on your specific NamedParameterJdbcTemplate properties and behavior
     }
 
     @Test
-    void testGetAllKnownProperties() {
-        Map<String, Object> allProperties = propertiesService.getAllKnownProperties();
-        assertNotNull(allProperties);
-        assertFalse(allProperties.isEmpty());
-        // Add more assertions based on the expected behavior of getAllKnownProperties
+    void testReportingdbBeanCreation() {
+        assertNotNull(reportingdb);
+        // Add more assertions based on your specific DataSource properties and behavior for reportingdb
+    }
+
+    @Test
+    void testJdbcTemplateReportingBeanCreation() {
+        assertNotNull(jdbcTemplateReporting);
+        // Add more assertions based on your specific JdbcTemplate properties and behavior for reportingdb
+    }
+
+    @Test
+    void testReportingGuidbJdbcTemplateBeanCreation() {
+        assertNotNull(reportingGuidbJdbcTemplate);
+        // Add more assertions based on your specific NamedParameterJdbcTemplate properties and behavior for reportingdb
+    }
+
+    @Test
+    void testAsyncExecutorBeanCreation() {
+        assertNotNull(asyncExecutor);
+        // Add more assertions based on your specific Executor properties and behavior
     }
 }
