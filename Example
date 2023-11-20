@@ -1,28 +1,46 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-class SwaggerConfigsTest {
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest(classes = PropertiesService.class)
+class PropertiesServiceTest {
+
+    @Autowired
+    private PropertiesService propertiesService;
 
     @Test
-    void testSwaggerDocketBeanCreation() {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SwaggerConfigs.class)) {
-            // Check if the Docket bean is created
-            assertNotNull(context.getBean(Docket.class));
-        }
+    void testGetProperties() {
+        String properties = propertiesService.getProperties();
+        assertNotNull(properties);
+        assertTrue(properties.contains("someProperty")); // Replace with an actual property name
     }
 
     @Test
-    void testCorsFilterBeanCreation() {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SwaggerConfigs.class)) {
-            // Check if the CorsFilter bean is created
-            assertNotNull(context.getBean(CorsFilter.class));
-        }
+    void testGetProperty() {
+        String propName = "someProperty"; // Replace with an actual property name
+        String propertyValue = propertiesService.getProperty(propName);
+        assertNotNull(propertyValue);
+        // Add more assertions based on the expected behavior of getProperty
     }
 
     @Test
-    void testApiInfoCreation() {
-        SwaggerConfigs swaggerConfigs = new SwaggerConfigs();
-        assertNotNull(swaggerConfigs.metaData());
+    void testGetPropertyWithDefault() {
+        String propName = "someProperty"; // Replace with an actual property name
+        String defaultValue = "default";
+        String propertyValue = propertiesService.getProperty(propName, defaultValue);
+        assertNotNull(propertyValue);
+        // Add more assertions based on the expected behavior of getProperty with default
+    }
+
+    @Test
+    void testGetAllKnownProperties() {
+        Map<String, Object> allProperties = propertiesService.getAllKnownProperties();
+        assertNotNull(allProperties);
+        assertFalse(allProperties.isEmpty());
+        // Add more assertions based on the expected behavior of getAllKnownProperties
     }
 }
