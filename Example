@@ -1,73 +1,30 @@
-public SearchDocumentsResponse processRequest(SearchDocumentsRequest request, SearchDocumentsResponse response) {
-    Logger.debug("processRequest Start ");
-
-    SearchResults results = new SearchResults();
-    List<SearchResultsMessage> searchResultsMessage = null;
-
-    HashMap<String, String> errorMap = new HashMap<>();
-    HashMap<String, List<Long>> ecListMap = null;
-    String inConditionStr = null;
-    List<Long> list = null;
-
+if (isValidDateInput(startDate)) {
     try {
-        ecListMap = searchDocQryHelper.getEmailCategories(request.getCategory(), request.getCategoryKeyword());
-    } catch (DataAccessException e) {
-        handleDataAccessException(response, "Internal Error");
-        return response;
-    }
-
-    list = new ArrayList<>();
-    list = ecListMap.get(request.getCategoryKeyword());
-
-    if (list != null) {
-        inConditionStr = list.stream().map(String::valueOf).collect(Collectors.joining(","));
-    }
-
-    if (inConditionStr == null || inConditionStr.isEmpty()) {
-        handleEmptyCategoryError(response, request.getCategory());
-        return response;
-    }
-
-    handleDateParsing(response, request.getStartDate(), request.getEndDate());
-
-    try {
-        searchResultsMessage = searchDocQryHelper.getSearchResults(inConditionStr, startDate, endDate, request, hy);
-    } catch (DataAccessException e1) {
-        handleDataAccessException(response, "Internal Error");
-        return response;
-    }
-
-    results.setMessage(searchResultsMessage);
-    response.setSearchResults(results);
-    Logger.debug("processRequest End ");
-
-    return response;
-}
-
-private void handleDataAccessException(SearchDocumentsResponse response, String errorMsg) {
-    Logger.debug("DataAccessException: " + errorMsg);
-    errorMap.put("0000", errorMsg);
-    setResponseError(response);
-}
-
-private void handleEmptyCategoryError(SearchDocumentsResponse response, String category) {
-    Logger.debug("No Templates available for these categories - " + category);
-    errorMap.put("1004", "No Templates available for these categories - " + category);
-    setResponseError(response);
-}
-
-private void handleDateParsing(SearchDocumentsResponse response, String startDateStr, String endDateStr) {
-    try {
-        // Date parsing logic
-
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+        sDate = sdf.parse(startDate);
     } catch (ParseException e) {
-        Logger.debug("Error Parsing date - " + startDateStr);
-        errorMap.put("1005", "Error Parsing date - " + startDateStr);
-        setResponseError(response);
+        handleDateParseException(cceMsgResp);
+        return cceMsgResp;
     }
+} else {
+    // Set to 30 days back.
+    sDate = getDate30DaysBack();
 }
 
-private void setResponseError(SearchDocumentsResponse response) {
-    response.setErrorCode(errorMap.keySet().toString());
-    response.setErrorMsgTxt(errorMap.values().toString());
+// ...
+
+private boolean isValidDateInput(String date) {
+    return (date != null && date.trim().length() > 0) && !("null".equalsIgnoreCase(date));
+}
+
+private void handleDateParseException(CceMsgResp cceMsgResp) {
+    Logger.error("Unable to parse the date");
+    cceMsgResp.setErrorCode(EmailHistoryConstants.INVALID_DATE_FORMAT);
+    cceMsgResp.setErrorMsgTxt(EmailHistoryConstants.INVALID_DATE_FORMAT_STARTDATE_MSG);
+}
+
+private Date getDate30DaysBack() {
+    Calendar myCal = Calendar.getInstance();
+    myCal.add(Calendar.MONTH, -1);
+    return myCal.getTime();
 }
